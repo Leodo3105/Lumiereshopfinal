@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Lumiereshop.Models.SanPham>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Quản lý sản phẩm</h4>
+                    </div>
+                    <div class="card-body">
+                        <a asp-action="Create" class="btn btn-success">Tạo mới</a>
+                        <table class="table mt-2">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Tên</th>
+                                    <th scope="col">Ảnh</th>
+                                    <th scope="col">Giá</th>
+                                    <th scope="col">Số lượng</th>
+                                    <th scope="col">Size</th>
+                                    <th scope="col">Loại</th>
+                                    <th scope="col">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var sanPham in Model)
+                                {
+                                    <tr>
+                                        <td>@sanPham.ID</td>
+                                        <td>@sanPham.Ten</td>
+                                        <td><img src="~/client/images/products/@sanPham.Anh" alt="" width="100" height="120"></td>
+                                        <td>@sanPham.Gia.ToString("N0") đ</td>
+                                        <td>@sanPham.SoLuong</td>
+                                        <td>@sanPham.Size</td>
+                                        <td>
+                                            @foreach (var loai in ViewBag.ListLoai)
+                                            {
+                                                if (loai.ID == sanPham.IDLoai)
+                                                {
+                                                    @loai.Ten
+                                                    break;
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            <a asp-action="Detail" asp-route-id="@sanPham.ID" class="btn btn-info">Chi tiết</a>
+                                            <a asp-action="Edit" asp-route-id="@sanPham.ID" class="btn btn-primary">Chỉnh sửa</a>
+                                            <a asp-action="Delete" asp-route-id="@sanPham.ID" class="btn btn-danger">Xóa</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

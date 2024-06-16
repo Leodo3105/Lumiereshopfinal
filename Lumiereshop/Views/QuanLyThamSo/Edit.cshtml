@@ -1,0 +1,35 @@
+﻿@model Lumiereshop.Models.ThamSo
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Chỉnh sửa Tham số</h4>                     
+                    </div>
+                    <div class="card-body">
+                        <a class="text-danger" style="text-align: center">Lưu ý: chỉ up ảnh cho logo, các tham số khác chỉnh sửa nội dung</a>
+                        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                            <input type="hidden" asp-for="ID" />
+                            <div class="form-group">
+                                <label for="NoiDung">Nội dung:</label>
+                                <input id="NoiDung" name="NoiDung" class="form-control" rows="5" asp-for="NoiDung">
+                            </div>
+                            <div class="form-group">
+                                <label for="anh">Ảnh:</label>
+                                <input type="file" id="anh" name="anhTep" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Lưu chỉnh sửa</button>
+                            <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

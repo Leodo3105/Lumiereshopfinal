@@ -1,0 +1,85 @@
+﻿@model Lumiereshop.Models.SanPham
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Chi tiết sản phẩm</h4>
+                    </div>
+                    <div class="card-body">
+                        <div>
+                            <dl class="row">
+                                <dt class="col-sm-3">ID:</dt>
+                                <dd class="col-sm-9">@Html.DisplayFor(model => model.ID)</dd>
+                            </dl>
+                            <dl class="row">
+                                <dt class="col-sm-3">Tên:</dt>
+                                <dd class="col-sm-9">@Html.DisplayFor(model => model.Ten)</dd>
+                            </dl>
+                            <dl class="row">
+                                <dt class="col-sm-3">Ảnh:</dt>
+                                <dd class="col-sm-9">
+                                    @if (!string.IsNullOrEmpty(Model.Anh))
+                                    {
+                                            <img src="~/client/images/products/@Model.Anh" alt="Ảnh sản phẩm" style="max-width: 200px; max-height: 200px;" />
+                                    }
+                                    else
+                                    {
+                                            <span>Không có ảnh</span>
+                                    }
+                                </dd>
+                            </dl>
+                            <dl class="row">
+                                <dt class="col-sm-3">Giá:</dt>
+                                <dd class="col-sm-9">@String.Format("{0:N0}", Model.Gia)</dd>
+                            </dl>
+                            <dl class="row">
+                                <dt class="col-sm-3">Số lượng:</dt>
+                                <dd class="col-sm-9">@Html.DisplayFor(model => model.SoLuong)</dd>
+                            </dl> 
+                            <dl class="row">
+                                <dt class="col-sm-3">Size:</dt>
+                                <dd class="col-sm-9">@Html.DisplayFor(model => model.Size)</dd>
+                            </dl>
+                            @* <dl class="row">
+                                <dt class="col-sm-3">Hoa chính:</dt>
+                                <dd class="col-sm-9">@Html.DisplayFor(model => model.HoaChinh)</dd>
+                            </dl>
+                            <dl class="row">
+                                <dt class="col-sm-3">Hoa phụ:</dt>
+                                <dd class="col-sm-9">@Html.DisplayFor(model => model.HoaPhu)</dd>
+                            </dl> *@
+                            <dl class="row">
+                                <dt class="col-sm-3">Lưu ý:</dt>
+                                <dd class="col-sm-9">@Html.DisplayFor(model => model.LuuY)</dd>
+                            </dl>
+                            <dl class="row">
+                                <dt class="col-sm-3">ID Loại:</dt>
+                                <dd class="col-sm-9">
+                                    @foreach (var loai in ViewBag.ListLoai)
+                                    {
+                                        if (loai.ID == Model.IDLoai)
+                                        {
+                                            @loai.Ten
+                                            break;
+                                        }
+                                    }
+                                </dd>
+                            </dl>
+                        </div>
+                        <div>
+                            <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-info">Chỉnh sửa</a>
+                            <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

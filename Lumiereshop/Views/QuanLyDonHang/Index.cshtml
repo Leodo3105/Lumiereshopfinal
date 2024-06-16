@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Lumiereshop.Models.DonHang>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Quản lý đơn hàng</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table mt-2">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Tên Khách Hàng</th>
+                                    <th scope="col">Ngày Đặt</th>
+                                    <th scope="col">Địa Chỉ</th>
+                                    <th scope="col">Số Điện Thoại</th>
+                                    <th scope="col">Tài khoản</th>
+                                    <th scope="col">Trạng Thái</th>                                  
+                                    <th scope="col">Thao Tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tbody>
+                                    @foreach (var donHang in Model)
+                                    {
+                                    <tr>
+                                        <td>@donHang.Ten</td>
+                                        <td>@donHang.NgayDat.ToString("dd/MM/yyyy")</td>
+                                        <td>@donHang.DiaChi</td>
+                                        <td>@donHang.SoDienThoai</td>
+                                        <td>
+                                            @if (donHang.IDNguoiDung.HasValue)
+                                            {
+                                                foreach (var nguoiDung in ViewBag.ListNguoiDung)
+                                                {
+                                                    if (nguoiDung.ID == donHang.IDNguoiDung)
+                                                    {
+                                                        @nguoiDung.TaiKhoan
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                            <span>Không có</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (donHang.TrangThai == 0)
+                                            {
+                                                <span class="badge badge-warning">Đang xử lý</span>
+                                            }
+                                            else if (donHang.TrangThai == 1)
+                                            {
+                                                <span class="badge badge-success">Đã duyệt</span>
+                                            }
+                                            else if (donHang.TrangThai == 2)
+                                            {
+                                                <span class="badge badge-danger">Đã huỷ</span>
+                                            }
+                                            else if (donHang.TrangThai == 3)
+                                            {
+                                                <span class="badge badge-primary">Đang giao</span>
+                                            }
+                                            else if (donHang.TrangThai == 4)
+                                            {
+                                                <span class="badge badge-success">Đã hoàn thành</span>
+                                            }
+                                        </td>
+
+                                        <td>
+                                            <a asp-action="Detail" asp-route-id="@donHang.ID" class="btn btn-info">Chi tiết</a>
+                                            <a asp-action="Edit" asp-route-id="@donHang.ID" class="btn btn-primary">Chỉnh sửa</a>
+                                            <a asp-action="ExportToExcel" asp-route-id="@donHang.ID" class="btn btn-success">Xuất excel</a>
+                                        </td>
+                                    </tr>
+                                    }
+                            </tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

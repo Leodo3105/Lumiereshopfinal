@@ -1,0 +1,169 @@
+﻿@{
+    Layout = "_AdminLayout";
+}
+
+<section class="section">
+    <div class="row ">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="card">
+                <div class="card-statistic-4">
+                    <div class="align-items-center justify-content-between">
+                        <div class="row ">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                                <div class="card-content">
+                                    <h5 class="font-15">Sản phẩm</h5>
+                                    <h2 class="mb-3 font-18">@ViewBag.SoLuongSanPham</h2>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                                <div class="banner-img">
+                                    <img src="~/admin/img/banner/1.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="card">
+                <div class="card-statistic-4">
+                    <div class="align-items-center justify-content-between">
+                        <div class="row ">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                                <div class="card-content">
+                                    <h5 class="font-15"> Người dùng</h5>
+                                    <h2 class="mb-3 font-18">@ViewBag.SoLuongNguoiDung</h2>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                                <div class="banner-img">
+                                    <img src="~/admin/img/banner/2.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="card">
+                <div class="card-statistic-4">
+                    <div class="align-items-center justify-content-between">
+                        <div class="row ">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                                <div class="card-content">
+                                    <h5 class="font-15">Đơn hàng</h5>
+                                    <h2 class="mb-3 font-18">@ViewBag.SoLuongDonHang</h2>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                                <div class="banner-img">
+                                    <img src="~/admin/img/banner/3.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="card">
+                <div class="card-statistic-4">
+                    <div class="align-items-center justify-content-between">
+                        <div class="row ">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                                <div class="card-content">
+                                    <h5 class="font-15">Doanh thu</h5>
+                                    <h2 class="mb-3 font-18">@ViewBag.TongDoanhThu.ToString("N0") đ</h2>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                                <div class="banner-img">
+                                    <img src="~/admin/img/banner/4.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Thống kê doanh thu theo tháng</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div id="chart1"></div>                            
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Khi trình duyệt đã sẵn sàng
+        chart1(); // Gọi hàm để vẽ biểu đồ
+
+        function chart1() {
+            // Lấy dữ liệu từ ViewBag và chuyển đổi thành JavaScript object
+            var data = JSON.parse('@Html.Raw(ViewBag.DoanhThuTheoThang)');
+
+            // Lấy mảng tháng từ dữ liệu đã lấy được
+            var thang = data.Thang;
+
+            // Lấy mảng doanh thu từ dữ liệu đã lấy được
+            var doanhThu = data.DoanhThu;
+
+            // Cấu hình các tùy chọn cho biểu đồ
+            var options = {
+                chart: {
+                    height: 230,
+                    type: "line",
+                    shadow: {
+                        enabled: true,
+                        color: "#000",
+                        top: 18,
+                        left: 7,
+                        blur: 10,
+                        opacity: 1
+                    },
+                    toolbar: {
+                        show: true
+                    }
+                },
+                colors: ["#786BED", "#999b9c"],
+                series: [{
+                    name: "Doanh thu", // Tên của dãy dữ liệu
+                    data: doanhThu // Dữ liệu doanh thu
+                }],
+                xaxis: {
+                    categories: thang, // Danh sách các tháng
+
+                    labels: {
+                        style: {
+                            colors: "#9aa0ac"
+                        }
+                    }
+                }
+            };
+
+            // Tạo biểu đồ với các tùy chọn đã cấu hình
+            var chart = new ApexCharts(document.querySelector("#chart1"), options);
+
+            // Vẽ biểu đồ
+            chart.render();
+        }
+    });
+</script>

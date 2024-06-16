@@ -1,0 +1,129 @@
+﻿@model Lumiereshop.Models.DonHang
+@using Lumiereshop.Models
+@inject ApplicationDbContext _dbContext
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Chi tiết đơn hàng</h4>
+                    </div>
+                    <div class="card-body">
+                        <div>
+                            <dl class="row">
+                                <dt class="col-sm-3">ID:</dt>
+                                <dd class="col-sm-9">@Model.ID</dd>
+                            </dl>
+                            <dl class="row">
+                                <dt class="col-sm-3">Tên Khách Hàng:</dt>
+                                <dd class="col-sm-9">@Model.Ten</dd>
+                            </dl>
+                            <dl class="row">
+                                <dt class="col-sm-3">Ngày Đặt:</dt>
+                                <dd class="col-sm-9">@Model.NgayDat.ToString("dd/MM/yyyy")</dd>
+                            </dl>
+                            <dl class="row">
+                                <dt class="col-sm-3">Địa Chỉ:</dt>
+                                <dd class="col-sm-9">@Model.DiaChi</dd>
+                            </dl>
+                            <dl class="row">
+                                <dt class="col-sm-3">Số Điện Thoại:</dt>
+                                <dd class="col-sm-9">@Model.SoDienThoai</dd>
+                            </dl>
+                            <dl class="row">
+                                <dt class="col-sm-3">Trạng Thái:</dt>
+                                <dd class="col-sm-9">
+                                    @if (Model.TrangThai == 0)
+                                    {
+                                        <span class="badge badge-warning">Đang xử lý</span>
+                                    }
+                                    else if (Model.TrangThai == 1)
+                                    {
+                                        <span class="badge badge-success">Đã duyệt</span>
+                                    }
+                                    else if (Model.TrangThai == 2)
+                                    {
+                                        <span class="badge badge-danger">Đã huỷ</span>
+                                    }
+                                    else if (Model.TrangThai == 3)
+                                    {
+                                        <span class="badge badge-primary">Đang giao</span>
+                                    }
+                                    else if (Model.TrangThai == 4)
+                                    {
+                                        <span class="badge badge-success">Đã hoàn thành</span>
+                                    }
+                                </dd>
+                            </dl>
+                            <dl class="row">
+                                <dt class="col-sm-3">Tài khoản:</dt>
+                                <dd class="col-sm-9">
+                                    @if (Model.IDNguoiDung.HasValue)
+                                    {
+                                        foreach (var nguoiDung in ViewBag.ListNguoiDung)
+                                        {
+                                            if (nguoiDung.ID == Model.IDNguoiDung)
+                                            {
+                                                @nguoiDung.TaiKhoan
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span>Không có</span>
+                                    }
+                                </dd>
+                            </dl>
+                            <hr />
+                            <h5>Chi tiết đơn hàng</h5>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Sản Phẩm</th>
+                                            <th>Số Lượng</th>
+                                            <th>Giá</th>
+                                            <th>ID Đơn Hàng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var chiTiet in ViewBag.ListChiTiet)
+                                        {
+                                            <tr>
+                                                <td>@chiTiet.ID</td>
+                                                <td>
+                                                    @{
+                                                        var sanPham = await _dbContext.SanPham.FindAsync(chiTiet.IDSanPham);
+                                                        if (sanPham != null)
+                                                        {
+                                                            <text>@sanPham.Ten</text>
+                                                        }
+                                                    }
+                                                </td>
+                                                <td>@chiTiet.SoLuong</td>
+                                                <td>@chiTiet.Gia.ToString("N0") đ</td>                                             
+                                                <td>@chiTiet.IDDonHang</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div>
+                            <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-info">Chỉnh sửa</a>
+                            <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

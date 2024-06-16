@@ -1,0 +1,106 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Layout";
+}
+
+<div class="breadcrumb">
+	<div class="container">
+		<div class="breadcrumb-inner">
+			<ul class="list-inline list-unstyled">
+				<li><a asp-controller="Home" asp-action="Index">Home</a></li>
+				<li class='active'>Tài khoản</li>
+			</ul>
+		</div><!-- /.breadcrumb-inner -->
+	</div><!-- /.container -->
+</div><!-- /.breadcrumb -->
+
+<div class="body-content">
+    <div class="container">
+        <div class="track-order-page">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="heading-title">Thông tin khách hàng</h2>
+                    <form action="" method="post">
+                        <!-- Đặt action và method cho form -->
+                        <div class="customer-info">
+                            <div class="form-group">
+                                <label for="ten">Tên:</label>
+                                <input type="text" id="ten" name="ten" class="form-control" placeholder="Nhập tên" value="@ViewBag.User.Ten">
+                            </div>
+                            <div class="form-group">
+                                <label for="diachi">Địa chỉ:</label>
+                                <input type="text" id="diachi" name="diachi" class="form-control" placeholder="Nhập địa chỉ" value="@ViewBag.User.DiaChi">
+                            </div>
+                             <div class="form-group">
+                                <label for="ten">Mật khẩu:</label>
+                                <input type="password" id="ten" name="matkhau" class="form-control" placeholder="Nhập mật khẩu nếu muốn thay đổi" value="">
+                            </div>
+                            <div class="form-group">
+                                <label for="ten">Nhập lại mật khẩu:</label>
+                                <input type="password" id="ten" name="nhaplaimatkhau" class="form-control" placeholder="Nhập lại mật khẩu" value="">
+                            </div>
+                            <div class="form-group">
+                                <label for="quyen">Quyền:</label>
+                                <input type="text" id="quyen" class="form-control" value="@((ViewBag.User.Quyen == 1) ? "Admin" : "Khách hàng")" readonly>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.row -->
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="heading-title">Thông tin đơn hàng</h2>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Tên đơn hàng</th>
+                                    <th>Ngày đặt</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var donHang in ViewBag.ListDonHang)
+                                {
+                                    <tr>
+                                        <td>@donHang.Ten</td>
+                                        <td>@donHang.NgayDat.ToString("dd/MM/yyyy")</td>
+                                        <td>@donHang.DiaChi</td>
+                                        <td>@donHang.SoDienThoai</td>
+                                        <td>
+                                            @if (donHang.TrangThai == 0)
+                                            {
+                                                <span class="text-warning">Chờ xử lý</span>
+                                            }
+                                            else if (donHang.TrangThai == 1)
+                                            {
+                                                <span class="text-success">Đã duyệt</span>
+                                            }
+                                            else if (donHang.TrangThai == 2)
+                                            {
+                                                <span class="text-danger">Đã huỷ</span>
+                                            }
+                                            else if (donHang.TrangThai == 3)
+                                            {
+                                                <span class="text-primary">Đang giao</span>
+                                            }
+                                            else if (donHang.TrangThai == 4)
+                                            {
+                                                <span class="text-info">Hoàn thành</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.sigin-in-->
+    </div><!-- /.container -->
+</div><!-- /.body-content -->

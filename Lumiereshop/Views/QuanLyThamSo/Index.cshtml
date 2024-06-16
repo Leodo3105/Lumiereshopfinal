@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Lumiereshop.Models.ThamSo>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Danh sách Tham Số</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table mt-2">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Mã</th>
+                                    <th scope="col">Tên</th>
+                                    <th scope="col">Nội Dung</th>
+                                    <th scope="col">Ảnh</th>
+                                    <th scope="col">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.ID</td>
+                                        <td>@item.MA</td>
+                                        <td>@item.Ten</td>
+                                        <td>@item.NoiDung</td>
+                                        <td>@if (!string.IsNullOrEmpty(item.Anh))
+                                            {
+                                                <img src="~/client/images/@item.Anh" alt="">
+                                            }
+                                        </td>
+                                        <td>
+                                            <a asp-action="Detail" asp-route-id="@item.ID" class="btn btn-info">Chi tiết</a>
+                                            <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary">Chỉnh sửa</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

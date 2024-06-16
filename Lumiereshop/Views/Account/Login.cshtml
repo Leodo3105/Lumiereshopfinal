@@ -1,0 +1,79 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <link href="~/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        .card {
+            max-width: 700px;
+            margin: auto;
+            margin-top: 100px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center">ĐĂNG NHẬP</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="form-group">
+                                <label for="taikhoan">Email<span class="text-danger">*</span></label>
+                                <input type="text" id="usernameInput" name="taikhoan" class="form-control" required="" placeholder="Nhập tài khoản">
+                            </div>
+                            <div class="form-group">
+                                <label for="matkhau">Mật khẩu<span class="text-danger">*</span></label>
+                                <input id="passwordInput" type="password" name="matkhau" class="form-control" required="" placeholder="Nhập mật khẩu">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success btn-block">Đăng Nhập</button>
+                            </div>
+                        </form>
+                        <div class="text-center mb-4 button-group">
+                            <a asp-controller="Account" asp-action="Signup" class="btn btn-primary">Đăng ký nếu chưa có tài khoản</a>
+                            <a asp-controller="Account" asp-action="ResetPass" class="btn btn-primary">Quên Mật Khẩu</a>
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Quay lại trang chủ</a>                          
+                        </div>
+
+                        <style>
+                            .button-group {
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                gap: 20px; /* khoảng cách giữa các nút */
+                                margin-top: 20px; /* khoảng cách phía trên nhóm nút */
+                            }
+
+                                .button-group .btn {
+                                    padding: 10px 20px; /* tăng kích thước padding để nút trông lớn hơn */
+                                    border-radius: 5px; /* bo tròn các góc nút */
+                                    transition: background-color 0.3s ease, transform 0.3s ease; /* hiệu ứng chuyển đổi khi hover */
+                                }
+
+                                    .button-group .btn:hover {
+                                        background-color: #6c757d; /* màu nền khi hover */
+                                        color: #fff; /* màu chữ khi hover */
+                                        transform: scale(1.1); /* phóng to nút khi hover */
+                                    }
+                        </style>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

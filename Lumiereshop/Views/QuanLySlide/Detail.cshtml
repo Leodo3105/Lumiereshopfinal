@@ -1,0 +1,36 @@
+﻿@model Lumiereshop.Models.Slide
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Chi tiết Slide</h4>
+                    </div>
+                    <div class="card-body">
+                        <div>
+                            <dl class="row">
+                                <dt class="col-sm-3">ID:</dt>
+                                <dd class="col-sm-9">@Html.DisplayFor(model => model.ID)</dd>
+                            </dl>
+                            <dl class="row">
+                                <dt class="col-sm-3">Ảnh:</dt>
+                                <dd class="col-sm-9">
+                                    <img src="~/client/images/sliders/@Model.Anh" alt="Ảnh Slide" style="max-width: 200px; max-height: 120px;" />
+                                </dd>
+                            </dl>
+                        </div>
+                        <div>
+                            <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

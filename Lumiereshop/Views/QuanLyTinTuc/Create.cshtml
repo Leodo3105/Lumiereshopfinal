@@ -1,0 +1,41 @@
+﻿@model Lumiereshop.Models.TinTuc
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Tạo mới tin tức</h4>
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="Create" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="ten">Tên<span class="text-danger">*</span>:</label>
+                                        <input type="text" id="ten" name="ten" class="form-control" asp-for="Ten">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="anh">Ảnh<span class="text-danger">*</span>:</label>
+                                        <input type="file" id="anh" name="anhTep" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="noiDung">Nội dung<span class="text-danger">*</span>:</label>
+                                        <textarea id="noiDung" name="noiDung" class="form-control" asp-for="NoiDung"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Tạo mới</button>
+                            <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

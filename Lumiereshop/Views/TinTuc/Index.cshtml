@@ -1,0 +1,55 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+	Layout = "_Layout";
+}
+
+<div class="breadcrumb">
+	<div class="container">
+		<div class="breadcrumb-inner">
+			<ul class="list-inline list-unstyled">
+				<li><a asp-controller="Home" asp-action="Index">Home</a></li>
+				<li class='active'>Tin tức</li>
+			</ul>
+		</div><!-- /.breadcrumb-inner -->
+	</div><!-- /.container -->
+</div><!-- /.breadcrumb -->
+
+<div class="body-content">
+	<div class="container">
+		<div class="row">
+			<div class="blog-page">
+				<div class="col-xs-12 col-sm-9 col-md-9 rht-col">
+
+					@foreach (var tinTuc in ViewBag.ListTinTuc)
+                    {
+						<div class="blog-post  wow fadeInUp">
+							<a asp-controller="TinTuc" asp-action="ChiTietTinTuc" asp-route-id="@tinTuc.ID"><img class="img-responsive" src="~/client/images/blog/@tinTuc.Anh" alt=""></a>
+							<h1><a asp-controller="ChiTietTinTuc" asp-action="Index" asp-route-id="@tinTuc.ID">@tinTuc.Ten</a></h1>
+							<span class="author">John Doe</span>
+							<span class="review">6 Comments</span>
+							<span class="date-time">
+								@tinTuc.NgayDang.ToString("dd/MM/yyyy")
+							</span>
+							<p>
+								@Html.Raw(tinTuc.NoiDung.Substring(0, Math.Min(tinTuc.NoiDung.Length, 500))) @if (tinTuc.NoiDung.Length > 500)
+								{
+									<text>...</text>
+								}
+							</p>
+							<a asp-controller="ChiTietTinTuc" asp-action="Index" asp-route-id="@tinTuc.ID" class="btn btn-upper btn-primary read-more">Đọc thêm</a>
+						</div>
+					}	
+									</div>
+								</div>
+							</div>
+						</div>					
+						<!-- ============================================== PRODUCT TAGS : END ============================================== -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- ============================================================= FOOTER ============================================================= -->

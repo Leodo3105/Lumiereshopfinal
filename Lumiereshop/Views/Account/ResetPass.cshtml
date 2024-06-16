@@ -1,0 +1,89 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <link href="~/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        .card {
+            max-width: 700px;
+            margin: auto;
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center">Đặt Lại Mật Khẩu</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                        
+                            @if (ViewBag.check != true && ViewBag.otp != true)
+                            {
+                                <div class="form-group">
+                                    <label for="taikhoan">Nhập Email của bạn <span class="text-danger">*</span></label>
+                                    <input type="text" id="usernameInput" name="taikhoan" class="form-control" required="">
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-block">Kiểm Tra</button>
+                                </div>
+                            }
+                            @if (ViewBag.otp == true)
+                            {
+                                <div class="form-group">
+                                    <label for="taikhoan">Nhập Email của bạn <span class="text-danger">*</span></label>
+                                    <input type="text" id="usernameInput" name="taikhoan" value="@ViewBag.value" class="form-control" required="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="taikhoan">Nhập Otp<span class="text-danger">*</span></label>
+                                    <input type="text" id="usernameInput" name="otp"  class="form-control" required="">
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-block">Xác Nhận Otp</button>
+                                </div>
+                            }
+                            @if (ViewBag.check == true && ViewBag.otp != true)
+                            {
+                                <div class="form-group">
+                                    <label for="taikhoan">Nhập Email của bạn <span class="text-danger">*</span></label>
+                                    <input type="text" id="usernameInput" name="taikhoan" value="@ViewBag.value" class="form-control" required="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="matkhau">Mật khẩu<span class="text-danger">*</span></label>
+                                    <input id="passwordInput" type="password" name="password" class="form-control" required="" placeholder="Nhập mật khẩu mới">
+                                </div>
+                                <div class="form-group">
+                                    <label for="matkhau">Mật khẩu<span class="text-danger">*</span></label>
+                                    <input id="passwordInput" type="password" name="password2" class="form-control" required="" placeholder="Xác Nhận mật khẩu mới">
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-block">Đổi Mật Khẩu</button>
+                                </div>
+                            }
+                          
+                        </form>
+                        <div class="text-center mb-3">
+                            <a asp-controller="Account" asp-action="Signup" class="btn btn-secondary">Đăng ký nếu chưa có tài khoản</a>
+                            <a asp-controller="Account" asp-action="Login" class="btn btn-secondary">Đăng Nhập</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

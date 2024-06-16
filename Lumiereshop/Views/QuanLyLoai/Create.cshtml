@@ -1,0 +1,29 @@
+﻿@model Lumiereshop.Models.Loai
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Tạo mới</h4>
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="Create">
+                            <div class="form-group">
+                                <label for="ten">Tên<span class="text-danger">*</span>:</label>
+                                <input type="text" id="ten" name="ten" class="form-control" asp-for="Ten">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Tạo mới</button>
+                            <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

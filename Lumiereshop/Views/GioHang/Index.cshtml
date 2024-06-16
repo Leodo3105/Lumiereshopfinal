@@ -1,0 +1,164 @@
+﻿@*
+    
+*@
+@{
+	Layout = "_Layout";
+}
+
+<div class="breadcrumb">
+	<div class="container">
+		<div class="breadcrumb-inner">
+			<ul class="list-inline list-unstyled">
+				<li><a asp-controller="Home" asp-action="Index">Home</a></li>
+				<li class='active'>Giỏ hàng</li>
+			</ul>
+		</div><!-- /.breadcrumb-inner -->
+	</div><!-- /.container -->
+</div><!-- /.breadcrumb -->
+
+<div class="body-content outer-top-xs">
+	<div class="container">
+		<div class="row ">
+			<div class="shopping-cart">
+				<div class="shopping-cart-table ">
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr>
+									<th class="cart-romove item">Xoá</th>
+									<th class="cart-description item">Ảnh</th>
+									<th class="cart-product-name item">Tên sản phẩm</th>
+									<th class="cart-sub-total item">Giá</th>
+									<th class="cart-qty item">Số lượng</th>
+									<th class="cart-total last-item">Tổng</th>
+								</tr>
+							</thead><!-- /thead -->
+
+							<tbody>
+								@foreach (var item in ViewBag.CartItems)
+                                {
+									<tr>
+										<td class="romove-item"><a asp-controller="GioHang" asp-action="DeleteCart" asp-route-id="@item.ID" title="cancel" class="icon"><i class="fa fa-trash-o"></i></a></td>
+										<td class="cart-image">
+											<a class="entry-thumbnail" asp-controller="SanPham" asp-action="ChiTietSanPham" asp-route-id="@item.ID">
+												<img src="~/client/images/products/@item.Anh" alt="">
+											</a>
+										</td>
+										<td class="cart-product-name-info">
+											<h4 style="text-align:center" class='cart-product-description'><a asp-controller="SanPham" asp-action="ChiTietSanPham" asp-route-id="@item.ID">@item.Ten</a></h4>
+										</td>
+										<td class="cart-product-sub-total"><span class="cart-sub-total-price">@item.Gia.ToString("N0") đ</span></td>
+										<td class="cart-product-quantity">
+											<div class="quant-input">
+												<div class="arrows">
+													<div class="arrow plus gradient"><span class="ir"><a asp-controller="GioHang" asp-action="PlusCart" asp-route-id="@item.ID"><i class="icon fa fa-sort-asc"></i></a></span></div>
+													<div class="arrow minus gradient"><span class="ir"><a asp-controller="GioHang" asp-action="MinusCart" asp-route-id="@item.ID"><i class="icon fa fa-sort-desc"></i></a></span></div>
+												</div>
+												<input type="text" value="@item.SoLuong">
+											</div>
+										</td>
+										<td class="cart-product-grand-total"><span class="cart-grand-total-price">@string.Format("{0:N0}", item.Tong) đ</span></td>
+									</tr>									
+								}
+							</tbody><!-- /tbody -->
+
+							<tfoot>
+								<tr>
+									<td colspan="7">
+										<div class="shopping-cart-btn">
+											<span class="">
+												<a asp-controller="Home" asp-action="Index" class="btn btn-upper btn-primary outer-left-xs">Tiếp tục mua hàng</a>
+											</span>
+										</div><!-- /.shopping-cart-btn -->
+									</td>
+								</tr>
+							</tfoot>
+						</table><!-- /table -->
+					</div>
+				</div><!-- /.shopping-cart-table -->
+				
+				<form id="checkoutForm" action='@Url.Action("ThanhToan", "GioHang")' method="post">
+					<div class="col-md-4 col-sm-12 estimate-ship-tax">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>
+										<span class="estimate-title">Thông tin khách hàng</span>
+										<p>Thay đổi thông tin khách hàng</p>
+									</th>
+								</tr>
+							</thead><!-- /thead -->
+							<tbody>
+								<tr>
+									<td>
+										<div class="form-group">
+											<label class="info-title control-label">Tài khoản</label>
+											<input type="text" class="form-control unicase-form-control text-input" value="@ViewBag.User?.TaiKhoan" readonly>
+										</div>
+										<div class="form-group">
+											<label class="info-title control-label">Tên <span class="text-danger">*</span></label>
+											<input type="text" class="form-control unicase-form-control text-input" name="ten" placeholder="Nhập tên" value="@ViewBag.User?.Ten">
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div><!-- /.estimate-ship-tax -->
+
+					<div class="col-md-4 col-sm-12 estimate-ship-tax">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>
+										<span class="estimate-title">Thông tin giao hàng</span>
+										<p>Thay đổi thông tin giao hàng</p>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<div class="form-group">
+											<label class="info-title control-label">Địa chỉ <span class="text-danger">*</span></label>
+											<input type="text" class="form-control unicase-form-control text-input" name="diachi" placeholder="Nhập địa chỉ" value="@ViewBag.User?.DiaChi">
+										</div>
+										<div class="form-group">
+											<label class="info-title control-label">Số điện thoại <span class="text-danger">*</span></label>
+											<input type="text" class="form-control unicase-form-control text-input" name="sodienthoai" placeholder="Nhập số điện thoại" value="">
+										</div>
+									</td>
+								</tr>
+							</tbody><!-- /tbody -->
+						</table><!-- /table -->
+					</div><!-- /.estimate-ship-tax -->
+
+					<div class="col-md-4 col-sm-12 cart-shopping-total">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>
+										<div class="cart-sub-total">
+											Số lượng<span class="inner-left-md">@ViewBag.SoLuong</span>
+										</div>
+										<div class="cart-grand-total">
+											Tổng đơn hàng<span class="inner-left-md">@ViewBag.TongTien.ToString("N0") đ</span>
+										</div>
+									</th>
+								</tr>
+							</thead><!-- /thead -->
+							<tbody>
+								<tr>
+									<td>
+										<div class="cart-checkout-btn pull-right">
+											<button type="submit" class="btn btn-primary checkout-btn">Thanh toán</button>
+										</div>
+									</td>
+								</tr>
+							</tbody><!-- /tbody -->
+						</table><!-- /table -->
+					</div><!-- /.cart-shopping-total -->
+				</form>
+			</div><!-- /.shopping-cart -->
+		</div> <!-- /.row -->
+	</div>
+</div>

@@ -1,0 +1,190 @@
+﻿@using Lumiereshop.Models;
+@using Microsoft.AspNetCore.Http;
+@using Newtonsoft.Json
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject ApplicationDbContext _dbContext
+
+@{
+    var httpContext = HttpContextAccessor.HttpContext;
+    var Ten = "";
+    int Quyen = 0;
+    int SoLuong = 0;
+    int Tong = 0;
+
+    var sessionCart = httpContext.Session.GetString("Cart");
+    if (sessionCart != null)
+    {
+        var cartItems = JsonConvert.DeserializeObject<List<Cart>>(sessionCart);
+        SoLuong = cartItems.Sum(item => item.SoLuong);
+        Tong = Convert.ToInt32(cartItems.Sum(item => item.Gia * item.SoLuong));
+    }
+
+    List<Loai> ListLoai;
+    ListLoai = _dbContext.Loai.ToList();
+    var logo = _dbContext.ThamSo.FirstOrDefault(ts => ts.MA == "LOGO");
+}
+
+<!-- ============================================== HEADER ============================================== -->
+<header class="header-style-1">
+
+    <!-- ============================================== TOP MENU ============================================== -->
+    <div class="top-bar animate-dropdown">
+        <div class="container">
+            <div class="header-top-inner">
+                <div class="cnt-account">
+                    <ul class="list-unstyled">
+                        <li class="header_cart hidden-xs"><a asp-controller="GioHang" asp-action="Index"><span>Giỏ hàng</span></a></li>
+                        @if (httpContext.Session.GetInt32("UserID") != null)
+                        {
+                            var userId = httpContext.Session.GetInt32("UserID");
+
+                            if (userId != null)
+                            {
+                                var user = _dbContext.NguoiDung.FindAsync(userId).Result;
+                                if (user != null)
+                                {
+                                    Ten = user.Ten;
+                                    Quyen = user.Quyen;
+                                }
+                            }
+                            if(Quyen == 1)
+                            {
+                                <li class="login"><a asp-controller="Admin" asp-action="Index"><span>Admin</span></a></li>
+                            }
+                            if (Ten != "")
+                            {
+                                <li class="login"><a asp-controller="Account" asp-action="TaiKhoan"><span>Xin chào, @Ten</span></a></li>
+                                <li class="login"><a asp-controller="Account" asp-action="Logout"><span>Đăng xuất</span></a></li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="login"><a asp-controller="Account" asp-action="Login"><span>Đăng nhập</span></a></li>
+                            <li class="check"><a asp-controller="Account" asp-action="Signup"><span>Đăng ký</span></a></li>
+                        }
+                    </ul>
+                </div>
+                <!-- /.cnt-account -->
+             
+                <!-- /.cnt-cart -->
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.header-top -->
+    <!-- ============================================== TOP MENU : END ============================================== -->
+    <div class="main-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-3 logo-holder">
+                    <!-- ============================================================= LOGO ============================================================= -->
+                    <div class="logo"> <a asp-controller="Home" asp-action="Index"> <img src="~/client/images/@logo.Anh" alt="logo"> </a> </div>
+                    <!-- /.logo -->
+                    <!-- ============================================================= LOGO : END ============================================================= -->
+                </div>
+                <!-- /.logo-holder -->
+
+                <div class="col-lg-7 col-md-6 col-sm-8 col-xs-12 top-search-holder">
+                    <!-- /.contact-row -->
+                    <!-- ============================================================= SEARCH AREA ============================================================= -->
+                    <div class="search-area">
+                        <form id="searchForm" method="post" action="@Url.Action("TimKiem", "SanPham")">
+                            <div class="control-group">
+                                <ul class="categories-filter animate-dropdown">
+                                    <li class="dropdown">
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Danh mục <b class="caret"></b></a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            @*<li role="presentation"><a role="menuitem" tabindex="-1" href="category.html">Clothing</a></li>*@
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <input type="text" class="search-field" name="keyword" placeholder="Tìm kiếm..." />
+                                <a id="searchButton" class="search-button"></a>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.search-area -->
+                    <!-- ============================================================= SEARCH AREA : END ============================================================= -->
+                </div>
+                <!-- /.top-search-holder -->
+
+                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 animate-dropdown top-cart-row">
+                    <!-- ============================================================= SHOPPING CART DROPDOWN ============================================================= -->
+                    <div class="dropdown dropdown-cart">
+                        <a asp-controller="GioHang" asp-action="Index" class="dropdown-toggle lnk-cart" data-toggle="dropdown">
+                            <div class="items-cart-inner">                               
+                                <div class="basket">
+                                    <div class="basket-item-count"><span class="count">@SoLuong</span></div>
+                                    <div class="total-price-basket"> <span class="lbl">Giỏ hàng</span> <span class="value">@Tong.ToString("N0") ₫</span> </div>
+                                </div>
+                            </div>
+                        </a>                    
+                    </div>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            document.querySelector('.dropdown-cart').addEventListener('click', function () {
+                                window.location.href = '@Url.Action("Index", "GioHang")';
+                            });
+                        });
+                    </script>
+
+                    <!-- /.dropdown-cart -->
+                    <!-- ============================================================= SHOPPING CART DROPDOWN : END============================================================= -->
+                </div>
+                <!-- /.top-cart-row -->
+            </div>
+            <!-- /.row -->
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.main-header -->
+    <!-- ============================================== NAVBAR ============================================== -->
+    <div class="header-nav animate-dropdown">
+        <div class="container">
+            <div class="yamm navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                    <button data-target="#mc-horizontal-menu-collapse" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                        <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="nav-bg-class">
+                    <div class="navbar-collapse collapse" id="mc-horizontal-menu-collapse">
+                        <div class="nav-outer">
+                            <ul class="nav navbar-nav">
+                                <li class="active dropdown"> <a asp-controller="Home" asp-action="Index">Trang chủ</a> </li>
+                                <li class="active dropdown"> <a asp-controller="TinTuc" asp-action="Index">Tin tức</a> </li>
+                                <li class="active dropdown"> <a asp-controller="LienHe" asp-action="Index">Liên hệ</a> </li>
+                                <li class="active dropdown"> <a asp-controller="GioHang" asp-action="Index">Giỏ hàng</a> </li>
+                            </ul>
+                            <!-- /.navbar-nav -->
+                            <div class="clearfix"></div>
+                        </div>
+                        <!-- /.nav-outer -->
+                    </div>
+                    <!-- /.navbar-collapse -->
+
+                </div>
+                <!-- /.nav-bg-class -->
+            </div>
+            <!-- /.navbar-default -->
+        </div>
+        <!-- /.container-class -->
+
+    </div>
+    <!-- /.header-nav -->
+    <!-- ============================================== NAVBAR : END ============================================== -->
+
+</header>
+
+<!-- ============================================== HEADER : END ============================================== -->
+
+<script>
+    document.getElementById("searchButton").addEventListener("click", function (event) {
+        event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
+        document.getElementById("searchForm").submit(); // Submit form khi nhấn vào thẻ <a>
+    });
+</script>

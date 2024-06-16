@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Lumiereshop.Models.TinTuc>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Quản lý tin tức</h4>
+                    </div>
+                    <div class="card-body">
+                        <a asp-action="Create" class="btn btn-success">Tạo mới</a>
+                        <table class="table mt-2">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Tên</th>
+                                    <th scope="col">Ảnh</th>
+                                    <th scope="col">Nội dung</th>
+                                    <th scope="col">Ngày đăng</th>
+                                    <th scope="col">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var tinTuc in Model)
+                                {
+                                    <tr>
+                                        <td>@tinTuc.ID</td>
+                                        <td>@tinTuc.Ten</td>
+                                        <td><img src="~/client/images/blog/@tinTuc.Anh" alt="" width="200" height="120"></td>
+                                        <td>@tinTuc.NoiDung</td>
+                                        <td>@tinTuc.NgayDang.ToString("dd/MM/yyyy")</td>
+                                        <td>
+                                            <a asp-action="Detail" asp-route-id="@tinTuc.ID" class="btn btn-info">Chi tiết</a>
+                                            <a asp-action="Edit" asp-route-id="@tinTuc.ID" class="btn btn-primary">Chỉnh sửa</a>
+                                            <a asp-action="Delete" asp-route-id="@tinTuc.ID" class="btn btn-danger">Xóa</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

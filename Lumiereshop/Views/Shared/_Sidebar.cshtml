@@ -1,0 +1,64 @@
+﻿@using Lumiereshop.Models;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject ApplicationDbContext _dbContext
+
+@{
+    var httpContext = HttpContextAccessor.HttpContext;
+    var logo = _dbContext.ThamSo.FirstOrDefault(ts => ts.MA == "LOGO");
+    var ten = _dbContext.ThamSo.FirstOrDefault(ts => ts.MA == "NAME");
+}
+
+<div class="main-sidebar sidebar-style-2">
+    <aside id="sidebar-wrapper">
+        <div class="sidebar-brand">
+            <a asp-controller="Admin" asp-action="Index" style="display: block; text-align: center;">
+                <img alt="image" src="~/client/images/@logo.Anh" class="header-logo" />
+                <span style="font-size: 16px;">@ten.NoiDung</span>
+            </a>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li class="menu-header">Main</li>
+            <li class="dropdown">
+                <a asp-controller="Admin" asp-action="Index" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="briefcase"></i><span>Sản phẩm</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" asp-controller="QuanLySanPham" asp-action="Index">Quản lý sản phẩm</a></li>
+                    <li><a class="nav-link" asp-controller="QuanLyLoai" asp-action="Index">Quản lý loại</a></li>
+                </ul>
+            </li>   
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="user-check"></i><span>Người dùng</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" asp-controller="QuanLyNguoiDung" asp-action="Index">Quản lý người dùng</a></li>
+                    <li><a class="nav-link" asp-controller="QuanLyTinTuc" asp-action="Index">Quản lý tin tức</a></li>
+                    <li><a class="nav-link" asp-controller="QuanLyPhanHoi" asp-action="Index">Quản lý phản hồi</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="shopping-bag"></i><span>Đơn hàng</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" asp-controller="QuanLyDonHang" asp-action="Index">Quản lý đơn hàng</a></li>
+                </ul>
+            </li>  
+            <li class="dropdown">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="anchor"></i><span>Website</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" asp-controller="QuanLyLienHe" asp-action="Index">Quản lý liên hệ</a></li>
+                    <li><a class="nav-link" asp-controller="QuanLySlide" asp-action="Index">Quản lý slide</a></li>
+                    <li><a class="nav-link" asp-controller="QuanLyThamSo" asp-action="Index">Quản lý tham số</a></li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
+</div>

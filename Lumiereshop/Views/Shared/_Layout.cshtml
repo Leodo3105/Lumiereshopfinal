@@ -1,0 +1,79 @@
+﻿@using Lumiereshop.Models;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject ApplicationDbContext _dbContext
+
+@{
+    var httpContext = HttpContextAccessor.HttpContext;
+    var ten = _dbContext.ThamSo.FirstOrDefault(ts => ts.MA == "NAME");
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keywords" content="MediaCenter, Template, eCommerce">
+    <meta name="robots" content="all">
+
+    <title>@ten.NoiDung</title>
+
+    <link href="~/client/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/client/css/main.css" rel="stylesheet" />
+    <link href="~/client/css/blue.css" rel="stylesheet" />
+    <link href="~/client/css/owl.carousel.css" rel="stylesheet" />
+    <link href="~/client/css/owl.transitions.css" rel="stylesheet" />
+    <link href="~/client/css/animate.min.css" rel="stylesheet" />
+    <link href="~/client/css/rateit.css" rel="stylesheet" />
+    <link href="~/client/css/bootstrap-select.min.css" rel="stylesheet" />
+    
+    <link href="~/client/css/font-awesome.css" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css?family=Barlow:200,300,300i,400,400i,500,500i,600,700,800" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,600italic,700,700italic,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    
+    @Html.Partial("_Header")
+
+    
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success" style="text-align:center">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger" style="text-align:center">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    @RenderBody()
+
+    @Html.Partial("_InfoBoxes")
+
+    @Html.Partial("_Footer")
+
+    <script src="~/client/js/jquery-1.11.1.min.js"></script>
+    <script src="~/client/js/bootstrap.min.js"></script>
+    <script src="~/client/js/bootstrap-hover-dropdown.min.js"></script>
+    <script src="~/client/js/owl.carousel.min.js"></script>
+    <script src="~/client/js/echo.min.js"></script>
+    <script src="~/client/js/jquery.rateit.min.js"></script>
+    <script src="~/client/js/lightbox.min.js"></script>
+    <script src="~/client/js/bootstrap-select.min.js"></script>
+    <script src="~/client/js/wow.min.js"></script>
+    <script src="~/client/js/scripts.js"></script>
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+    <df-messenger intent="WELCOME"
+                  chat-title="LumiereShop"
+                  agent-id="9bb90631-7cdd-4c18-a218-2354911502d9"
+                  language-code="vi"></df-messenger>
+</body>
+</html>

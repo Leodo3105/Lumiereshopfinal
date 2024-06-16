@@ -1,0 +1,71 @@
+﻿@model Lumiereshop.Models.SanPham
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Chỉnh sửa sản phẩm</h4>
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                            <input type="hidden" asp-for="ID" />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="ten">Tên<span class="text-danger">*</span>:</label>
+                                        <input type="text" id="ten" name="ten" class="form-control" asp-for="Ten">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="anh">Ảnh<span class="text-danger">*</span>:</label>
+                                        <input type="file" id="anh" name="anhTep" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="gia">Giá<span class="text-danger">*</span>:</label>
+                                        <input type="number" id="gia" name="gia" class="form-control" asp-for="Gia">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="soLuong">Số lượng<span class="text-danger">*</span>:</label>
+                                        <input type="number" id="soLuong" name="soLuong" class="form-control" asp-for="SoLuong">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="size">Size<span class="text-danger">*</span>:</label>
+                                        <select id="size" name="size" class="form-control" asp-for="Size">
+                                            <option value="S">S</option>
+                                            <option value="M">M</option>
+                                            <option value="L">L</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="idLoai">Loại<span class="text-danger">*</span>:</label>
+                                        <select id="idLoai" name="idLoai" class="form-control" asp-for="IDLoai">
+                                            @foreach (var loai in ViewBag.ListLoai)
+                                            {
+                                                <option value="@loai.ID">@loai.Ten</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="luuY">Lưu ý:</label>
+                                        <textarea id="luuY" name="luuY" class="form-control" asp-for="LuuY"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Lưu chỉnh sửa</button>
+                            <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

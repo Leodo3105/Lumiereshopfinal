@@ -1,0 +1,49 @@
+﻿@model Lumiereshop.Models.PhanHoi
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Chi tiết Phản hồi</h4>
+                    </div>
+                    <div class="card-body">
+                        <div>
+                            <dl class="row">
+                                <dt class="col-sm-3">ID:</dt>
+                                <dd class="col-sm-9">@Html.DisplayFor(model => model.ID)</dd>
+                            </dl>
+                            <dl class="row">
+                                <dt class="col-sm-3">Tên:</dt>
+                                <dd class="col-sm-9">@Html.DisplayFor(model => model.Ten)</dd>
+                            </dl>
+                            <dl class="row">
+                                <dt class="col-sm-3">Chức danh:</dt>
+                                <dd class="col-sm-9">@Html.DisplayFor(model => model.ChucDanh)</dd>
+                            </dl>
+                            <dl class="row">
+                                <dt class="col-sm-3">Ảnh:</dt>
+                                <dd class="col-sm-9">
+                                    <img src="~/client/images/testimonials/@Model.Anh" alt="Ảnh Phản hồi" style="max-width: 200px; max-height: 200px;" />
+                                </dd>
+                            </dl>
+                            <dl class="row">
+                                <dt class="col-sm-3">Nội dung:</dt>
+                                <dd class="col-sm-9">@Html.DisplayFor(model => model.NoiDung)</dd>
+                            </dl>
+                        </div>
+                        <div>
+                            <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-info">Chỉnh sửa</a>
+                            <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

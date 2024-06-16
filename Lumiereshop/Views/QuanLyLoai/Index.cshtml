@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Lumiereshop.Models.Loai>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Quản lý loại</h4>
+                    </div>
+                    <div class="card-body">      
+                        <a asp-action="Create" class="btn btn-success">Tạo mới</a>
+                        <table class="table mt-2">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Tên</th>
+                                    <th scope="col">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.ID</td>
+                                        <td>@item.Ten</td>
+                                        <td>
+                                            <a asp-action="Detail" asp-route-id="@item.ID" class="btn btn-info">Chi tiết</a>
+                                            <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary">Chỉnh sửa</a>
+                                            <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Xóa</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

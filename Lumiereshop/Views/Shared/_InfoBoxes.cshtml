@@ -1,0 +1,46 @@
+﻿@using Lumiereshop.Models;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject ApplicationDbContext _dbContext
+
+@{
+    var httpContext = HttpContextAccessor.HttpContext;
+    var soDienThoai = _dbContext.ThamSo.FirstOrDefault(ts => ts.MA == "NUMBER");
+}
+
+
+<!-- ============================================== INFO BOXES ============================================== -->
+<div class="row our-features-box">
+    <div class="container">
+        <ul>
+            <li>
+                <div class="feature-box">
+                    <div class="icon-truck"></div>
+                    <div class="content-blocks">Chúng tôi ship trên toàn quốc</div>
+                </div>
+            </li>
+            <li>
+                <div class="feature-box">
+                    <div class="icon-support"></div>
+                    <div class="content-blocks">
+                        Điện thoại: @string.Format("{0:(0000) 000-000}", Convert.ToInt64(soDienThoai.NoiDung))
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="feature-box">
+                    <div class="icon-money"></div>
+                    <div class="content-blocks">Hoàn tiền nếu không hài lòng</div>
+                </div>
+            </li>
+            <li>
+                <div class="feature-box">
+                    <div class="icon-return"></div>
+                    <div class="content">làm việc 24/7</div>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+</div>
+<!-- /.info-boxes -->
+<!-- ============================================== INFO BOXES : END ============================================== --> 

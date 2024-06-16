@@ -1,0 +1,62 @@
+﻿@using Lumiereshop.Models;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject ApplicationDbContext _dbContext
+
+@{
+    var httpContext = HttpContextAccessor.HttpContext;
+    var ten = _dbContext.ThamSo.FirstOrDefault(ts => ts.MA == "NAME");
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+
+    <title>@ten.NoiDung</title>
+
+    <link href="~/admin/css/app.min.css" rel="stylesheet" />
+    <link href="~/admin/css/style.css" rel="stylesheet" />
+    <link href="~/admin/css/components.css" rel="stylesheet" />
+    <link href="~/admin/css/custom.css" rel="stylesheet" />
+    <link rel='shortcut icon' type='image/x-icon' href='~/admin/img/favicon.ico' />
+</head>
+<body>
+    <div id="app">
+        <div class="main-wrapper main-wrapper-1">
+
+            @Html.Partial("_AdminHeader")
+
+            @Html.Partial("_Sidebar")      
+
+            <div class="main-content">
+
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success" style="text-align:center">
+                        @TempData["SuccessMessage"]
+                    </div>
+                }
+
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger" style="text-align:center">
+                        @TempData["ErrorMessage"]
+                    </div>
+                }
+
+                @RenderBody()
+
+            </div>
+
+            @Html.Partial("_AdminFooter")
+
+        </div>
+    </div>
+
+    <script src="~/admin/js/app.min.js"></script>
+    <script src="~/admin/bundles/apexcharts/apexcharts.min.js"></script>
+    <script src="~/admin/js/scripts.js"></script>
+    <script src="~/admin/js/custom.js"></script>
+</body>
+</html>

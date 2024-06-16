@@ -1,0 +1,26 @@
+﻿@model Lumiereshop.Models.NguoiDung
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Xóa người dùng</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Bạn có chắc chắn muốn xóa người dùng này?</p>
+                        <form asp-action="Delete" asp-route-id="@Model.ID">
+                            <button type="submit" class="btn btn-danger">Xóa</button>
+                            <a asp-action="Index" class="btn btn-secondary">Hủy bỏ</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
